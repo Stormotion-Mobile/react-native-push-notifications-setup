@@ -1,3 +1,10 @@
+import {PushNotificationOptions} from 'react-native-push-notification';
+
+export type PushNotificationInitializeProps = {
+  onNotification?: PushNotificationOptions['onNotification'];
+  removeAllDeliveredNotifications?: boolean;
+};
+
 export type DeviceTokenState = {
   newToken: string;
   actualToken?: string;
