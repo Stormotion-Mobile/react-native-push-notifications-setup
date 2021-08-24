@@ -26,11 +26,11 @@ const defaultOptions: PushNotificationOptions = {
 };
 
 export const configurePushNotifications = (
-  options: PushNotificationOptions,
-  channels: ChannelObject[],
+  options?: PushNotificationOptions,
+  channels?: ChannelObject[],
 ) => {
   PushNotification.configure({...defaultOptions, ...options});
-  createNotificationsChannels(channels);
+  channels && createNotificationsChannels(channels);
 };
 
 export const initPushNotifications = ({
