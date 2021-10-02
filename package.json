@@ -1,6 +1,6 @@
 {
   "name": "react-native-push-notifications-setup",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A module to configure Push Notifications in React Native apps using react-native-push-notification (https://github.com/zo0r/react-native-push-notification) package",
   "keywords": [
     "react-native",
@@ -12,7 +12,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "prepublishOnly": "yarn run build"
+    "prepare": "yarn build",
+    "postversion": "git push && git push --tags"
   },
   "author": "Stormotion",
   "publishConfig": {
