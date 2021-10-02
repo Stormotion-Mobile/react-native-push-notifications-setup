@@ -5,13 +5,13 @@ export type PushNotificationInitializeProps = {
   removeAllDeliveredNotifications?: boolean;
 };
 
-export type DeviceTokenState = {
+export type DeviceTokenState<IdType> = {
   newToken: string;
   actualToken?: string;
-  actualTokenId?: string | number;
+  actualTokenId?: IdType;
 };
 
-export type DeviceTokenCallbacks = {
-  onTokenSave: (token: string) => Promise<{id: string | number}>;
-  onTokenDelete?: (id: string | number) => Promise<any>;
+export type DeviceTokenCallbacks<IdType> = {
+  onTokenSave: (token: string) => Promise<{id: IdType}>;
+  onTokenDelete?: (id: IdType) => Promise<any>;
 };

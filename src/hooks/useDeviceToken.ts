@@ -7,23 +7,26 @@ import {
 } from '../utils/deviceToken';
 import errorHandler from '../utils/errorHandler';
 
-const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
+const useDeviceToken = <T>({
+  onTokenSave,
+  onTokenDelete,
+}: DeviceTokenCallbacks<T>) => {
   const registerDeviceToken = useCallback<(token: string) => Promise<void>>(
     async token => {
       try {
         const response = await onTokenSave(token);
 
-        const savedTokenState = await getSavedDeviceTokenState();
+        const savedTokenState = await getSavedDeviceTokenState<T>();
 
         const oldTokenId = savedTokenState?.actualTokenId;
 
-        const newTokenState: DeviceTokenState = {
+        const newTokenState: DeviceTokenState<T> = {
           actualToken: token,
           actualTokenId: response.id,
           newToken: savedTokenState?.newToken ?? '',
         };
 
-        saveDeviceTokenState(newTokenState);
+        await saveDeviceTokenState<T>(newTokenState);
 
         if (oldTokenId && response.id !== oldTokenId) {
           await onTokenDelete?.(oldTokenId);
@@ -35,14 +38,12 @@ const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
     [onTokenDelete, onTokenSave],
   );
 
-  const unregisterDeviceToken = useCallback<
-    (id: string | number) => Promise<void>
-  >(
+  const unregisterDeviceToken = useCallback<(id: T) => Promise<void>>(
     async id => {
       try {
         await onTokenDelete?.(id);
 
-        removeActualDeviceTokenState();
+        await removeActualDeviceTokenState();
       } catch (error) {
         errorHandler('Deleting device token request error', error);
       }

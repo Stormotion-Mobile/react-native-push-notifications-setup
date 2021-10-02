@@ -9,7 +9,9 @@ import {
 } from '../utils/pushNotifications';
 import useDeviceToken from './useDeviceToken';
 
-const usePushNotifications = (deviceTokenCallbacks: DeviceTokenCallbacks) => {
+const usePushNotifications = <T>(
+  deviceTokenCallbacks: DeviceTokenCallbacks<T>,
+) => {
   const {registerDeviceToken, unregisterDeviceToken} =
     useDeviceToken(deviceTokenCallbacks);
 
@@ -24,7 +26,11 @@ const usePushNotifications = (deviceTokenCallbacks: DeviceTokenCallbacks) => {
       return;
     }
 
-    newToken && registerDeviceToken(newToken);
+    if (!newToken) {
+      return;
+    }
+
+    await registerDeviceToken(newToken);
   }, [registerDeviceToken]);
 
   const enableNotifications = useCallback<
@@ -44,17 +50,20 @@ const usePushNotifications = (deviceTokenCallbacks: DeviceTokenCallbacks) => {
   );
 
   const disableNotifications = useCallback(async () => {
-    const savedToken = await getSavedDeviceTokenState();
+    const savedToken = await getSavedDeviceTokenState<T>();
 
-    savedToken?.actualTokenId &&
-      unregisterDeviceToken(savedToken.actualTokenId);
+    if (!savedToken?.actualTokenId) {
+      return;
+    }
+
+    await unregisterDeviceToken(savedToken.actualTokenId);
   }, [unregisterDeviceToken]);
 
   const syncNotifications = useCallback(async () => {
     const granted = await arePermissionsGranted();
 
     if (!granted) {
-      disableNotifications();
+      await disableNotifications();
       return;
     }
 

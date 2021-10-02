@@ -3,9 +3,9 @@ import {DeviceTokenCallbacks, PushNotificationInitializeProps} from '../types';
 import {initPushNotifications} from '../utils/pushNotifications';
 import usePushNotifications from './usePushNotifications';
 
-const useInitNotifications = (
+const useInitNotifications = <T>(
   initProps: PushNotificationInitializeProps,
-  deviceTokenCallbacks: DeviceTokenCallbacks,
+  deviceTokenCallbacks: DeviceTokenCallbacks<T>,
 ) => {
   const {syncNotifications} = usePushNotifications(deviceTokenCallbacks);
 

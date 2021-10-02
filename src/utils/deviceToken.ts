@@ -4,7 +4,9 @@ import errorHandler from './errorHandler';
 
 export const DEVICE_TOKEN_KEY = 'deviceToken';
 
-export const saveDeviceTokenState = async (tokenState: DeviceTokenState) => {
+export const saveDeviceTokenState = async <T>(
+  tokenState: DeviceTokenState<T>,
+) => {
   try {
     await AsyncStorage.setItem(DEVICE_TOKEN_KEY, JSON.stringify(tokenState));
   } catch (error) {
@@ -13,7 +15,7 @@ export const saveDeviceTokenState = async (tokenState: DeviceTokenState) => {
   }
 };
 
-export const getSavedDeviceTokenState = async () => {
+export const getSavedDeviceTokenState = async <T>() => {
   try {
     const tokenStateAsString = await AsyncStorage.getItem(DEVICE_TOKEN_KEY);
 
@@ -21,25 +23,25 @@ export const getSavedDeviceTokenState = async () => {
       ? JSON.parse(tokenStateAsString)
       : null;
 
-    return tokenState as DeviceTokenState;
+    return tokenState as DeviceTokenState<T>;
   } catch (error) {
     errorHandler('Getting device token error', error);
   }
 };
 
-export const removeActualDeviceTokenState = async () => {
+export const removeActualDeviceTokenState = async <T>() => {
   try {
-    const tokenState = await getSavedDeviceTokenState();
+    const tokenState = await getSavedDeviceTokenState<T>();
 
-    tokenState && saveDeviceTokenState({newToken: tokenState.newToken});
+    tokenState && saveDeviceTokenState<T>({newToken: tokenState.newToken});
   } catch (error) {
     errorHandler('Removing actual device token error', error);
   }
 };
 
-export const registerToken = async (token: string) => {
+export const registerToken = async <T>(token: string) => {
   try {
-    const savedTokenState = await getSavedDeviceTokenState();
+    const savedTokenState = await getSavedDeviceTokenState<T>();
 
     if (!savedTokenState) {
       const newTokenState = {newToken: token};
@@ -51,7 +53,7 @@ export const registerToken = async (token: string) => {
       return;
     }
 
-    const newTokenState: DeviceTokenState = {
+    const newTokenState: DeviceTokenState<T> = {
       ...savedTokenState,
       newToken: token,
     };
