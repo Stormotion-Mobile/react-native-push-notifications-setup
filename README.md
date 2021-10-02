@@ -28,6 +28,13 @@ You still need to configure natively a part of things. You can find out up-to-da
   Params:
   - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
 
+`deviceTokenCallbacks` functions help to synchronize device registration tokens with the back-end database and prevent storing invalid ones. The token can change on enabling/disabling notifications (changing permissions), restoring the app on a new device, re-installing the app, or clearing the app data. This library saves the token and its database unique identifier, so if it changes, the library "sends the signal" - executes `onTokenDelete` and `onTokenSave` functions.
+
+So, preferably:
+
+- `onTokenSave` - an API request to save the token into the back-end database that returns its `id`;
+- `onTokenSave` - an API request to delete the token from the database that accepts its `id` as a parameter.
+
 ## Bugs? Proposals?
 
 Feel free to open issues in case of bugs or proposals!
