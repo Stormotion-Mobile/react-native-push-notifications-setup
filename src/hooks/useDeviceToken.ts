@@ -5,7 +5,7 @@ import {
   removeActualDeviceTokenState,
   saveDeviceTokenState,
 } from '../utils/deviceToken';
-import devLog from '../utils/devLog';
+import errorHandler from '../utils/errorHandler';
 
 const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
   const registerDeviceToken = useCallback<(token: string) => Promise<void>>(
@@ -29,7 +29,7 @@ const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
           await onTokenDelete?.(oldTokenId);
         }
       } catch (error) {
-        devLog('Saving device token request error', error);
+        errorHandler('Saving device token request error', error);
       }
     },
     [onTokenDelete, onTokenSave],
@@ -44,7 +44,7 @@ const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
 
         removeActualDeviceTokenState();
       } catch (error) {
-        devLog('Deleting device token request error', error);
+        errorHandler('Deleting device token request error', error);
       }
     },
     [onTokenDelete],

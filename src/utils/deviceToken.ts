@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DeviceTokenState} from '../types';
-import devLog from './devLog';
+import errorHandler from './errorHandler';
 
 export const DEVICE_TOKEN_KEY = 'deviceToken';
 
@@ -8,7 +8,8 @@ export const saveDeviceTokenState = async (tokenState: DeviceTokenState) => {
   try {
     await AsyncStorage.setItem(DEVICE_TOKEN_KEY, JSON.stringify(tokenState));
   } catch (error) {
-    devLog('Setting device token error', error);
+    errorHandler('Setting device token error', error);
+    throw error;
   }
 };
 
@@ -22,7 +23,7 @@ export const getSavedDeviceTokenState = async () => {
 
     return tokenState as DeviceTokenState;
   } catch (error) {
-    devLog('Getting device token error', error);
+    errorHandler('Getting device token error', error);
   }
 };
 
@@ -32,7 +33,7 @@ export const removeActualDeviceTokenState = async () => {
 
     tokenState && saveDeviceTokenState({newToken: tokenState.newToken});
   } catch (error) {
-    devLog('Removing actual device token error', error);
+    errorHandler('Removing actual device token error', error);
   }
 };
 
@@ -57,6 +58,6 @@ export const registerToken = async (token: string) => {
 
     saveDeviceTokenState(newTokenState);
   } catch (error) {
-    devLog('Registering device token error', error);
+    errorHandler('Registering device token error', error);
   }
 };
