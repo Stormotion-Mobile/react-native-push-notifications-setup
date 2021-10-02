@@ -15,6 +15,8 @@ const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
 
         const savedTokenState = await getSavedDeviceTokenState();
 
+        const oldTokenId = savedTokenState?.actualTokenId;
+
         const newTokenState: DeviceTokenState = {
           actualToken: token,
           actualTokenId: response.id,
@@ -22,11 +24,15 @@ const useDeviceToken = ({onTokenSave, onTokenDelete}: DeviceTokenCallbacks) => {
         };
 
         saveDeviceTokenState(newTokenState);
+
+        if (oldTokenId && response.id !== oldTokenId) {
+          await onTokenDelete?.(oldTokenId);
+        }
       } catch (error) {
         devLog('Saving device token request error', error);
       }
     },
-    [onTokenSave],
+    [onTokenDelete, onTokenSave],
   );
 
   const unregisterDeviceToken = useCallback<
