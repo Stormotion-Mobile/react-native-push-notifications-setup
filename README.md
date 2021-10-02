@@ -18,6 +18,8 @@ You still need to configure natively a part of things. You can find out up-to-da
   - `options` - `PushNotificationOptions` ([description](https://github.com/zo0r/react-native-push-notification#usage))
   - `channels` - array of `ChannelObjects` (if you develop for Android) - starting in Android 8.0 (API level 26), all notifications must be assigned to a channel. For each channel, you can set the visual and auditory behavior that is applied to all notifications in that channel. Then, users can change these settings and decide which notification channels from your app should be intrusive or visible at all (according to [Android documentation](https://developer.android.com/training/notify-user/channels)).
 
+- `arePushNotificationsEnabled` - a method to check if the push notifications are enabled (permissions granted).
+
 - `useInitNotifications` - a hook to initialize & sync notifications with phone settings. It helps to manage notifications when they are received in the background mode (open the notification).  
   Params:
 
