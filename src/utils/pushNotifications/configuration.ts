@@ -5,13 +5,12 @@ import PushNotification, {
 } from 'react-native-push-notification';
 import {PushNotificationInitializeProps} from '../../types';
 import {registerToken} from '../deviceToken';
+import devLog from '../devLog';
 import errorHandler from '../errorHandler';
 import {createNotificationsChannels} from './channels';
 
 const defaultOptions: PushNotificationOptions = {
-  onRegister: async ({token}) => await registerToken(token),
-
-  onNotification: notification => errorHandler('Notification', notification),
+  onNotification: notification => devLog('Notification', notification),
 
   onRegistrationError: error =>
     errorHandler('On push notifications registration error', error),
@@ -25,11 +24,23 @@ const defaultOptions: PushNotificationOptions = {
   requestPermissions: Platform.OS === 'android',
 };
 
+const saveToken: (
+  options?: PushNotificationOptions,
+) => PushNotificationOptions['onRegister'] = options => async tokenPayload => {
+  await registerToken(tokenPayload.token);
+
+  options?.onRegister?.(tokenPayload);
+};
+
 export const configurePushNotifications = (
   options?: PushNotificationOptions,
   channels?: ChannelObject[],
 ) => {
-  PushNotification.configure({...defaultOptions, ...options});
+  PushNotification.configure({
+    ...defaultOptions,
+    ...options,
+    onRegister: saveToken(options),
+  });
   channels && createNotificationsChannels(channels);
 };
 
