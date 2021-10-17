@@ -7,8 +7,8 @@ You still need to configure natively a part of things. You can find out up-to-da
 ## Usage:
 
 1. Add `configurePushNotifications` in the app's first file - `index.js` (due to the [usage of react-native-push-notification](https://github.com/zo0r/react-native-push-notification#usage) library).
-2. Call `useInitNotifications` at the top level's component (`App`, `RootNavigator`, etc.) to initialize push notifications.
-3. Call `usePushNotifications` where you are going to manage push notifications.
+2. Call `useInitNotifications` at the top level's component (`App`, `RootNavigator`, etc.) to synchronize push notifications with the phone settings and configure the app behavior on the notification click in the background mode.
+3. Call `usePushNotifications` in the component where you are going to manage push notifications.
 
 ## Methods, hooks and types
 
@@ -23,10 +23,12 @@ You still need to configure natively a part of things. You can find out up-to-da
 - `useInitNotifications` - a hook to initialize & sync notifications with phone settings. It helps to manage notifications when they are received in the background mode (open the notification).  
   Params:
 
-  - `initProps` - an object to manage notifications that were received in the background mode. `onNotification` - a function to handle the notification when it is received or opened. `removeAllDeliveredNotifications` - should delete all notifications from Notification Center or not.
+  - `initProps` - an object to manage notifications that were received in the background mode.
+    - `onNotification` - a function to handle the notification when it is received or opened.
+    - `removeAllDeliveredNotifications` - a boolean parameter that tells the app whether it should delete all notifications from Notification Center or not.
   - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
 
-- `usePushNotifications` - a hook that return an object of functions that enable/disable push notifications.  
+- `usePushNotifications` - a hook that returns an object of functions to enable/disable push notifications.  
   Params:
   - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
 
