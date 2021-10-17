@@ -23,9 +23,10 @@ export const getSavedDeviceTokenState = async <T>() => {
       ? JSON.parse(tokenStateAsString)
       : null;
 
-    return tokenState as DeviceTokenState<T>;
+    return tokenState as DeviceTokenState<T> | null;
   } catch (error) {
     errorHandler('Getting device token error', error);
+    throw error;
   }
 };
 
@@ -33,9 +34,14 @@ export const removeActualDeviceTokenState = async <T>() => {
   try {
     const tokenState = await getSavedDeviceTokenState<T>();
 
-    tokenState && saveDeviceTokenState<T>({newToken: tokenState.newToken});
+    if (!tokenState) {
+      return;
+    }
+
+    await saveDeviceTokenState<T>({newToken: tokenState.newToken});
   } catch (error) {
     errorHandler('Removing actual device token error', error);
+    throw error;
   }
 };
 
@@ -45,7 +51,7 @@ export const registerToken = async <T>(token: string) => {
 
     if (!savedTokenState) {
       const newTokenState = {newToken: token};
-      saveDeviceTokenState(newTokenState);
+      await saveDeviceTokenState(newTokenState);
       return;
     }
 
@@ -58,8 +64,9 @@ export const registerToken = async <T>(token: string) => {
       newToken: token,
     };
 
-    saveDeviceTokenState(newTokenState);
+    await saveDeviceTokenState(newTokenState);
   } catch (error) {
     errorHandler('Registering device token error', error);
+    throw error;
   }
 };
