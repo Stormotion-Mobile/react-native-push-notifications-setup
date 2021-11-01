@@ -14,7 +14,7 @@ export const createNotificationsChannels = async (
     return;
   }
 
-  Promise.all(
+  await Promise.all(
     channels.map(
       async ({
         channelId,
@@ -28,7 +28,7 @@ export const createNotificationsChannels = async (
           return;
         }
 
-        PushNotification.createChannel(
+        return PushNotification.createChannel(
           {channelId, importance, soundName, vibrate, ...rest},
           created => devLog(`Channel ${channelId} created:`, created),
         );
