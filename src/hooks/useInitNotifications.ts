@@ -1,14 +1,12 @@
 import {useEffect, useRef} from 'react';
+import {syncNotifications} from '../pushNotifications';
 import {DeviceTokenCallbacks, PushNotificationInitializeProps} from '../types';
 import {initPushNotifications} from '../utils/pushNotifications';
-import usePushNotifications from './usePushNotifications';
 
 const useInitNotifications = <T>(
   initProps: PushNotificationInitializeProps,
-  deviceTokenCallbacks: DeviceTokenCallbacks<T>,
+  deviceTokenCallbacks?: DeviceTokenCallbacks<T>,
 ) => {
-  const {syncNotifications} = usePushNotifications(deviceTokenCallbacks);
-
   //To prevent calling syncNotifications function several times
   const firstLoaded = useRef(true);
 
@@ -17,9 +15,9 @@ const useInitNotifications = <T>(
       return;
     }
 
-    syncNotifications();
+    syncNotifications(deviceTokenCallbacks);
     firstLoaded.current = false;
-  }, [syncNotifications]);
+  }, [deviceTokenCallbacks]);
 
   useEffect(() => {
     initPushNotifications(initProps);

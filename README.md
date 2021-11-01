@@ -8,7 +8,7 @@ You still need to configure natively a part of things. You can find out up-to-da
 
 1. Add `configurePushNotifications` in the app's first file - `index.js` (due to the [usage of react-native-push-notification](https://github.com/zo0r/react-native-push-notification#usage) library).
 2. Call `useInitNotifications` at the top level's component (`App`, `RootNavigator`, etc.) to synchronize push notifications with the phone settings and configure the app behavior on the notification click in the background mode.
-3. Call `usePushNotifications` in the component where you are going to manage push notifications.
+3. Call `enableNotifications`, `disableNotifications` functions in the code where you are going to manage push notifications.
 
 ## Methods, hooks and types
 
@@ -28,7 +28,13 @@ You still need to configure natively a part of things. You can find out up-to-da
     - `removeAllDeliveredNotifications` - a boolean parameter that tells the app whether it should delete all notifications from Notification Center or not.
   - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
 
-- `usePushNotifications` - a hook that returns an object of functions to enable/disable push notifications.  
+- `enableNotifications` - a function to enable push notifications.
+  Params:
+
+  - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
+  - `onPermissionDenied` - a function that is executed when permissions are not granted. For example, show the alert window that will notify the user about it and suggest going to the Settings to fix it.
+
+- `disableNotifications` - a function to disable push notifications.
   Params:
   - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
 

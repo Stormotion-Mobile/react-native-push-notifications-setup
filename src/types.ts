@@ -12,6 +12,6 @@ export type DeviceTokenState<IdType> = {
 };
 
 export type DeviceTokenCallbacks<IdType> = {
-  onTokenSave: (token: string) => Promise<{id: IdType}>;
-  onTokenDelete?: (id: IdType) => Promise<any>;
+  onTokenSave: (token: string) => Promise<{id: IdType}> | {id: IdType};
+  onTokenDelete?: (id: IdType) => Promise<unknown> | unknown;
 };
