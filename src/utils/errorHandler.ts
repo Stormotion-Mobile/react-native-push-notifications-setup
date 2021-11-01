@@ -1,11 +1,4 @@
-const errorHandler = (message: string, error?: any) => {
-  if (__DEV__) {
-    return console.error(message, error);
-  }
-
-  if (error) {
-    throw error;
-  }
-};
+const errorHandler = (message: string, error?: unknown) =>
+  __DEV__ && console.error(message, error);
 
 export default errorHandler;
