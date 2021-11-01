@@ -17,7 +17,7 @@ const useInitNotifications = <T>(
       return;
     }
 
-    (async () => await syncNotifications())();
+    syncNotifications();
     firstLoaded.current = false;
   }, [syncNotifications]);
 
