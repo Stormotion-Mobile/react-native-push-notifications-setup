@@ -19,11 +19,7 @@
   "homepage": "https://github.com/Stormotion-Mobile/react-native-push-notifications-setup#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Stormotion-Mobile/react-native-push-notifications-setup"
-  },
-  "publishConfig": {
-    "access": "public",
-    "@stormotion:registry": "https://registry.npmjs.org"
+    "url": "git://github.com/Stormotion-Mobile/react-native-push-notifications-setup.git"
   },
   "license": "MIT",
   "files": [
