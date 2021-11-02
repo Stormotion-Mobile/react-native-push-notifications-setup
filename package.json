@@ -1,5 +1,5 @@
 {
-  "name": "react-native-push-notifications-setup",
+  "name": "@storm/react-native-push-notifications-setup",
   "version": "0.0.1",
   "description": "A module to configure Push Notifications in React Native apps using react-native-push-notification (https://github.com/zo0r/react-native-push-notification) package",
   "keywords": [
@@ -16,9 +16,14 @@
     "postversion": "git push && git push --tags"
   },
   "author": "Stormotion",
+  "homepage": "https://github.com/Stormotion-Mobile/react-native-push-notifications-setup#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stormotion-Mobile/react-native-push-notifications-setup"
+  },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org"
+    "@storm:registry": "https://registry.npmjs.org"
   },
   "license": "MIT",
   "files": [
