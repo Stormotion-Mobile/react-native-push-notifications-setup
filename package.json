@@ -28,16 +28,14 @@
     "@react-native-async-storage/async-storage": "^1.15.7",
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-community/push-notification-ios": "^1.10.0",
-    "@types/react-native": "^0.63.3",
+    "@types/react-native": "^0.60.0",
     "@types/react-native-push-notification": "^7.3.1",
     "eslint": "^7.14.0",
-    "react": "^17.0.1",
-    "react-native": "^0.63.3",
-    "react-native-push-notification": "^8.0.1",
     "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "react": ">=17.0.1",
-    "react-native": ">=0.63.2"
+    "react": ">=16.8.0",
+    "react-native": ">=0.59.0",
+    "react-native-push-notification": ">=8.0.1"
   }
 }
