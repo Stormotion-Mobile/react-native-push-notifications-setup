@@ -59,14 +59,13 @@ export const disableNotifications = async <T>({
   deviceTokenCallbacks?: DeviceTokenCallbacks<T>;
   onDisabling?: () => void;
 }) => {
+  onDisabling?.();
+
   const savedToken = await getSavedDeviceTokenState<T>();
 
-  if (!savedToken?.actualTokenId) {
-    return;
+  if (savedToken?.actualTokenId) {
+    await unregisterDeviceToken(savedToken.actualTokenId, deviceTokenCallbacks);
   }
-
-  await unregisterDeviceToken(savedToken.actualTokenId, deviceTokenCallbacks);
-  onDisabling?.();
 };
 
 export const syncNotifications = async <T>({
