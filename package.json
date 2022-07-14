@@ -1,6 +1,6 @@
 {
   "name": "@stormotion/react-native-push-notifications-setup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A module to configure Push Notifications in React Native apps using react-native-push-notification (https://github.com/zo0r/react-native-push-notification) package",
   "keywords": [
     "react-native",
