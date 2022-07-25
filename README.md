@@ -7,8 +7,9 @@ You still need to configure natively a part of things. You can find out up-to-da
 ## Usage:
 
 1. Add `configurePushNotifications` in the app's first file - `index.js` (due to the [usage of react-native-push-notification](https://github.com/zo0r/react-native-push-notification#usage) library).
-2. Call `useInitNotifications` at the top level's component (`App`, `RootNavigator`, etc.) to synchronize push notifications with the phone settings and configure the app behavior on the notification click in the background mode.
+2. Call `useSyncNotifications` at the top level's component where you handle notifications (e.g. `NotificationContext`) to synchronize push notifications with the phone settings.
 3. Call `enableNotifications`, `disableNotifications` functions in the code where you are going to manage push notifications.
+4. Call `useOpenNotification` at the correct component (e.g. `RootNavigator`) to configure the app behavior on the notification click in the background mode or when the app is terminated.
 
 ## Methods, hooks and types
 
@@ -20,16 +21,20 @@ You still need to configure natively a part of things. You can find out up-to-da
 
 - `arePushNotificationsEnabled` - a method to check if the push notifications are enabled (permissions granted).
 
-- `useInitNotifications` - a hook to initialize & sync notifications with phone settings. It helps to manage notifications when they are received in the background mode (open the notification).  
+- `useSyncNotifications` - a hook to initialize & sync notifications with phone settings. It helps to manage notifications when they are received in the background mode (open the notification).  
   Params:
 
   - `initProps` - an object to manage notifications that were received in the background mode.
-    - `onNotification` - a function to handle the notification when it is received or opened.
     - `removeAllDeliveredNotifications` - a boolean parameter that tells the app whether it should delete all notifications from Notification Center or not.
   - `syncNotificationsOptions` - a set of callbacks:
     - `deviceTokenCallbacks` - an object with callback functions to manage device tokens on saving and deleting.
     - `onEnabling` - a function that is called if enabling notifications is successful.
     - `onDisabling` - a function that is called if disabling notifications is successful.
+
+- `useOpenNotification` - a hook to manage the app behavior on clicking a notification.  
+  Params:
+
+  - `onNotification` - a function to handle the notification when it is received or opened.
 
 - `enableNotifications` - a function to enable push notifications.
   Params (object):

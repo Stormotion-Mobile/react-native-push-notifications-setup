@@ -1,7 +1,6 @@
 import {PushNotificationOptions} from 'react-native-push-notification';
 
 export type PushNotificationInitializeProps = {
-  onNotification?: PushNotificationOptions['onNotification'];
   removeAllDeliveredNotifications?: boolean;
 };
 
@@ -21,3 +20,5 @@ export type SyncNotificationsOptions<T> = {
   onEnabling?: () => void;
   onDisabling?: () => void;
 };
+
+export type OnNotification = PushNotificationOptions['onNotification'];

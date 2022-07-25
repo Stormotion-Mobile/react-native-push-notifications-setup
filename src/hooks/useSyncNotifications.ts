@@ -4,9 +4,9 @@ import {
   PushNotificationInitializeProps,
   SyncNotificationsOptions,
 } from '../types';
-import {initPushNotifications} from '../utils/pushNotifications';
+import {configureInitOptions} from '../utils/pushNotifications';
 
-const useInitNotifications = <T>(
+const useSyncNotifications = <T>(
   initProps: PushNotificationInitializeProps,
   syncNotificationsOptions: SyncNotificationsOptions<T>,
 ) => {
@@ -23,8 +23,8 @@ const useInitNotifications = <T>(
   }, [syncNotificationsOptions]);
 
   useEffect(() => {
-    initPushNotifications(initProps);
+    configureInitOptions(initProps);
   }, [initProps]);
 };
 
-export default useInitNotifications;
+export default useSyncNotifications;

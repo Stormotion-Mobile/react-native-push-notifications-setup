@@ -1,4 +1,5 @@
-export {default as useInitNotifications} from './hooks/useInitNotifications';
+export {default as useSyncNotifications} from './hooks/useSyncNotifications';
+export {default as useOpenNotification} from './hooks/useOpenNotification';
 export {enableNotifications, disableNotifications} from './pushNotifications';
 
 export {configurePushNotifications} from './utils/pushNotifications/index';

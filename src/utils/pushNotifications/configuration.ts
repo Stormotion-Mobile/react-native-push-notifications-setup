@@ -44,15 +44,18 @@ export const configurePushNotifications = (
   channels && createNotificationsChannels(channels);
 };
 
-export const initPushNotifications = ({
-  onNotification,
+export const configureInitOptions = ({
   removeAllDeliveredNotifications = false,
 }: PushNotificationInitializeProps) => {
-  PushNotification.popInitialNotification(notification => {
-    notification && onNotification?.(notification);
-  });
-
   if (removeAllDeliveredNotifications) {
     PushNotification.removeAllDeliveredNotifications();
   }
+};
+
+export const openInitialNotification = (
+  onNotification: PushNotificationOptions['onNotification'],
+) => {
+  PushNotification.popInitialNotification(notification => {
+    notification && onNotification?.(notification);
+  });
 };
